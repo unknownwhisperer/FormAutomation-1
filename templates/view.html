@@ -1,0 +1,53 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <title>List</title>  
+</head>  
+<body>  
+  
+<h3>Employee Information</h3>  
+<table border="1">  
+    <thead>  
+        <td></td>
+        <td>ID</td>
+        <td>No. Registrasi</td> 
+        <td>Nama Lengkap (Sesuai KTP)</td>
+        <td>Tempat/Tanggal Lahir</td>  
+        <td>NIK/NIP</td>
+        <td>Email Aktif</td>  
+        <td>No HP Aktif</td>
+        <td>No HP Wali/Atasan</td>
+        <td>Pekerjaan</td>
+        <td>Alamat Domisili</td>
+        <td>Program Akademi</td>
+        <td>Tema Pelatihan</td>
+        <td>Mitra Pelatihan</td>
+    </thead>  
+      
+    {% for row in rows %}  
+    <form action="/pdf" method="post">  
+        <tr>
+            <td><input type="hidden" name="id_employees" value={{row["id_employees"]}}><input type="submit" value="Print"></td>
+            <td>{{row["id_employees"]}}</td>
+            <td>{{row["no_registrasi"]}}</td> 
+            <td>{{row["nama"]}}</td>
+            <td>{{row["tempat_tanggal_lahir"]}}</td>
+            <td>{{row["nik_nip"]}}</td>
+            <td>{{row["email"]}}</td>
+            <td>{{row["hp"]}}</td>
+            <td>{{row["hp_wali_atasan"]}}</td>
+            <td>{{row["pekerjaan"]}}</td>
+            <td>{{row["alamat"]}}</td>
+            <td>{{row["program_akademi"]}}</td>
+            <td>{{row["tema_pelatihan"]}}</td>
+            <td>{{row["mitra_pelatihan"]}}</td>
+        </tr>  
+    </form>  
+    {% endfor %}  
+</table>  
+<br><br>  
+  
+<a href="/">Go back to home page</a>  
+  
+</body>  
+</html>  
