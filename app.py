@@ -4,9 +4,14 @@ import sqlite3
   
 app = Flask(__name__)  
  
-@app.route("/")  
-def index():  
-    return render_template("index.html");  
+@app.route("/")
+def index():
+    con = sqlite3.connect("database.db")
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+    cur.execute("select * from Employees")
+    rows = cur.fetchall()
+    return render_template("index.html",rows = rows) 
  
 @app.route("/add")
 def add():
@@ -38,7 +43,7 @@ def saveDetails():
             con.rollback()
             msg = "We can not add the employee to the list"
         finally:
-            return render_template("success.html",msg = msg)
+            return redirect('/')
             con.close()
  
 @app.route("/view")  
@@ -48,15 +53,17 @@ def view():
     cur = con.cursor()  
     cur.execute("select * from Employees")  
     rows = cur.fetchall()  
-    return render_template("view.html",rows = rows)  
+    return render_template("view.html",rows = rows)
  
-@app.route("/delete")  
-def delete():  
-    return render_template("delete.html")  
+# @app.route("/delete")  
+# def delete():  
+#     return render_template("delete.html")  
  
-@app.route("/deleterecord",methods = ["POST"])  
-def deleterecord():  
-    id_employees = request.form["id_employees"]
+# @app.route("/deleterecord",methods = ["POST"])
+# def deleterecord():
+# id_employees = request.form["id_employees"]
+@app.route("/delete/<int:id_employees>")  
+def delete(id_employees):
     with sqlite3.connect("database.db") as con:  
         try:  
             cur = con.cursor()  
@@ -65,11 +72,13 @@ def deleterecord():
         except:  
             msg = "can't be deleted"  
         finally:  
-            return render_template("delete_record.html",msg = msg)  
+            # return render_template("delete_record.html",msg = msg)
+            return redirect('/')
 
-@app.route("/pdf",methods = ["POST"])
-def pdf():
-    id_employees = request.form["id_employees"]
+# @app.route("/pdf",methods = ["POST"])
+@app.route("/pdf/<int:id_employees>")
+def pdf(id_employees):
+    # id_employees = request.form["id_employees"]
     con = sqlite3.connect("database.db")  
     con.row_factory = sqlite3.Row  
     cur = con.cursor()  
