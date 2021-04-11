@@ -17,7 +17,7 @@ def index():
 def add():
     return render_template("add.html")
  
-@app.route("/savedetails",methods = ["POST","GET"])
+@app.route("/insert",methods = ["POST","GET"])
 def saveDetails():
     msg = "msg"
     if request.method == "POST":
@@ -38,30 +38,16 @@ def saveDetails():
                 cur = con.cursor()
                 cur.execute("INSERT into Employees (no_registrasi,nama,tempat_tanggal_lahir,nik_nip,email,hp,hp_wali_atasan,pekerjaan,alamat,program_akademi,tema_pelatihan,mitra_pelatihan) values (?,?,?,?,?,?,?,?,?,?,?,?)",(no_registrasi,nama,tempat_tanggal_lahir,nik_nip,email,hp,hp_wali_atasan,pekerjaan,alamat,program_akademi,tema_pelatihan,mitra_pelatihan))
                 con.commit()
+                con.close()
                 msg = "Employee successfully Added"
         except:
             con.rollback()
+            con.close()
             msg = "We can not add the employee to the list"
         finally:
             return redirect('/')
-            con.close()
+            
  
-@app.route("/view")  
-def view():  
-    con = sqlite3.connect("database.db")  
-    con.row_factory = sqlite3.Row  
-    cur = con.cursor()  
-    cur.execute("select * from Employees")  
-    rows = cur.fetchall()  
-    return render_template("view.html",rows = rows)
- 
-# @app.route("/delete")  
-# def delete():  
-#     return render_template("delete.html")  
- 
-# @app.route("/deleterecord",methods = ["POST"])
-# def deleterecord():
-# id_employees = request.form["id_employees"]
 @app.route("/delete/<int:id_employees>")  
 def delete(id_employees):
     with sqlite3.connect("database.db") as con:  
@@ -72,13 +58,10 @@ def delete(id_employees):
         except:  
             msg = "can't be deleted"  
         finally:  
-            # return render_template("delete_record.html",msg = msg)
             return redirect('/')
 
-# @app.route("/pdf",methods = ["POST"])
-@app.route("/pdf/<int:id_employees>")
-def pdf(id_employees):
-    # id_employees = request.form["id_employees"]
+@app.route("/fk/<int:id_employees>")
+def fk(id_employees):
     con = sqlite3.connect("database.db")  
     con.row_factory = sqlite3.Row  
     cur = con.cursor()  
@@ -87,7 +70,7 @@ def pdf(id_employees):
     
     pdf = FPDF(orientation='P', unit='mm', format='A4')
     pdf.add_page()
-    pdf.set_font("Arial", size=12)
+    pdf.set_font("Arial", size=9)
     pdf.cell(200, 10, txt="Form Komitmen", ln=1, align="C")
     
     for row in rows:
@@ -98,12 +81,42 @@ def pdf(id_employees):
         pdf.cell(200, 10, txt=row["hp"], ln=1)
         pdf.cell(200, 10, txt=row["hp_wali_atasan"], ln=1)
         pdf.cell(200, 10, txt=row["pekerjaan"], ln=1)
-        pdf.cell(200, 10, txt=row["alamat"], ln=1)
+        pdf.multi_cell(150, 10, txt=row["alamat"],align="J")
+        # pdf.ln()
         pdf.cell(200, 10, txt=row["program_akademi"], ln=1)
         pdf.cell(200, 10, txt=row["tema_pelatihan"], ln=1)
         pdf.cell(200, 10, txt=row["mitra_pelatihan"], ln=1)
     
-    return Response(pdf.output(dest='S').encode('latin-1'), mimetype='application/pdf', headers={'Content-Disposition':'attachment;filename=form_komitmen.pdf'})
+    return Response(pdf.output(dest='S').encode('latin-1'), mimetype='application/pdf', headers={'Content-Disposition':'attachment;filename=form_komitmen_'+ row["nama"] +'.pdf'})
+
+@app.route("/fpj/<int:id_employees>")
+def fpj(id_employees):
+    con = sqlite3.connect("database.db")  
+    con.row_factory = sqlite3.Row  
+    cur = con.cursor()  
+    cur.execute("select * from Employees where id_employees = ?",(id_employees,))   
+    rows = cur.fetchall()
+    
+    pdf = FPDF(orientation='P', unit='mm', format='A4')
+    pdf.add_page()
+    pdf.set_font("Arial", size=9)
+    pdf.cell(200, 10, txt="Form Komitmen", ln=1, align="C")
+    
+    for row in rows:
+        pdf.cell(200, 10, txt=row["nama"], ln=1)
+        pdf.cell(200, 10, txt=row["tempat_tanggal_lahir"], ln=1)
+        pdf.cell(200, 10, txt=row["nik_nip"], ln=1)
+        pdf.cell(200, 10, txt=row["email"], ln=1)
+        pdf.cell(200, 10, txt=row["hp"], ln=1)
+        pdf.cell(200, 10, txt=row["hp_wali_atasan"], ln=1)
+        pdf.cell(200, 10, txt=row["pekerjaan"], ln=1)
+        pdf.multi_cell(150, 10, txt=row["alamat"],align="J")
+        # pdf.ln()
+        pdf.cell(200, 10, txt=row["program_akademi"], ln=1)
+        pdf.cell(200, 10, txt=row["tema_pelatihan"], ln=1)
+        pdf.cell(200, 10, txt=row["mitra_pelatihan"], ln=1)
+    
+    return Response(pdf.output(dest='S').encode('latin-1'), mimetype='application/pdf', headers={'Content-Disposition':'attachment;filename=form_pertanggungjawaban_' + row["nama"] + '.pdf'})
   
 if __name__ == "__main__":  
     app.run(debug = True)  

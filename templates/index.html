@@ -11,7 +11,7 @@
 <body>  
 
 <h3>Employee Information</h3>
-<table id="dtHorizontalVerticalExample" class="table table-striped table-hover table-bordered w-auto" cellspacing="0" width="100%">
+<table id="dtHorizontalVerticalExample" class="table table-hover table-bordered w-auto" cellspacing="0" width="100%">
     <thead>  
         <tr>
         <th><a class="btn btn-success" href="/add">Add</a></th>
@@ -33,10 +33,8 @@
       
     <tbody>
     {% for row in rows %}  
-    <!-- <form action="/pdf" method="post"> -->
         <tr>
-            <!-- <td><input type="hidden" name="id_employees" value={{row["id_employees"]}}><input type="submit" value="Print"></td> -->
-            <td><a class="btn btn-primary" href="/pdf/{{row["id_employees"]}}">Print</a> <a class="btn btn-danger" href="/delete/{{row["id_employees"]}}">Delete</a></td>
+            <td><a class="btn btn-primary" href="/fk/{{row["id_employees"]}}">FK</a> <a class="btn btn-primary" href="/fpj/{{row["id_employees"]}}">FPJ</a> <a class="btn btn-danger" href="/delete/{{row["id_employees"]}}">Delete</a></td>
             <td style="display:none;">{{row["id_employees"]}}</td>
             <th scope="row">{{row["no_registrasi"]}}</th> 
             <th scope="row">{{row["nama"]}}</th>
@@ -51,7 +49,6 @@
             <td>{{row["tema_pelatihan"]}}</td>
             <td>{{row["mitra_pelatihan"]}}</td>
         </tr>  
-    <!-- </form>   -->
     {% endfor %}
 </tbody>
 
