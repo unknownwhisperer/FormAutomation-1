@@ -69,11 +69,18 @@ def fk(id_employees):
     rows = cur.fetchall()
     
     pdf = FPDF(orientation='P', unit='mm', format='A4')
+    pdf.l_margin = pdf.l_margin*2.0
+    pdf.r_margin = pdf.r_margin*2.0
+    pdf.t_margin = pdf.t_margin*2.0
+    pdf.b_margin = pdf.b_margin*2.0
+
     pdf.add_page()
-    pdf.set_font("Arial", size=9)
-    pdf.cell(200, 10, txt="Form Komitmen", ln=1, align="C")
+    pdf.set_font("Arial",style='B', size=12)
+    pdf.multi_cell(100,5, txt="FORM KOMITMEN PARTISIPASI PROGRAM PEMBERIAN BANTUAN PEMERINTAH DIGITAL TALENT SCHOLARSHIP TAHUN 2021", align="C")
+    # pdf.cell(100,5, txt="FORM KOMITMEN PARTISIPASI PROGRAM PEMBERIAN BANTUAN PEMERINTAH DIGITAL TALENT SCHOLARSHIP TAHUN 2021", align="C")
     
     for row in rows:
+        pdf.set_font("Arial", size=10)
         pdf.cell(200, 10, txt=row["nama"], ln=1)
         pdf.cell(200, 10, txt=row["tempat_tanggal_lahir"], ln=1)
         pdf.cell(200, 10, txt=row["nik_nip"], ln=1)
@@ -87,7 +94,7 @@ def fk(id_employees):
         pdf.cell(200, 10, txt=row["tema_pelatihan"], ln=1)
         pdf.cell(200, 10, txt=row["mitra_pelatihan"], ln=1)
     
-    return Response(pdf.output(dest='S').encode('latin-1'), mimetype='application/pdf', headers={'Content-Disposition':'attachment;filename=form_komitmen_'+ row["nama"] +'.pdf'})
+    return Response(pdf.output(dest='S').encode('latin-1'), mimetype='application/pdf', headers={'Content-Disposition':'attachment;filename=Form Komitmen '+ row["nama"] +'.pdf'})
 
 @app.route("/fpj/<int:id_employees>")
 def fpj(id_employees):
@@ -116,7 +123,7 @@ def fpj(id_employees):
         pdf.cell(200, 10, txt=row["tema_pelatihan"], ln=1)
         pdf.cell(200, 10, txt=row["mitra_pelatihan"], ln=1)
     
-    return Response(pdf.output(dest='S').encode('latin-1'), mimetype='application/pdf', headers={'Content-Disposition':'attachment;filename=form_pertanggungjawaban_' + row["nama"] + '.pdf'})
+    return Response(pdf.output(dest='S').encode('latin-1'), mimetype='application/pdf', headers={'Content-Disposition':'attachment;filename=Form PertanggungJawaban ' + row["nama"] + '.pdf'})
   
 if __name__ == "__main__":  
     app.run(debug = True)  
