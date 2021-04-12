@@ -1,7 +1,7 @@
 # FormAutomation
 
 Prerequisite
-1. Install Python language
+1. Install Python
 2. Install database SQLite
 3. Install web framework Flask
 4. Install FPDF package
