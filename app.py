@@ -17,7 +17,7 @@ def index():
 def add():
     return render_template("add.html")
  
-@app.route("/insert",methods = ["POST","GET"])
+@app.route("/insert",methods = ["POST"])
 def saveDetails():
     msg = "msg"
     if request.method == "POST":
