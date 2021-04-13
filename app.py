@@ -160,7 +160,7 @@ def fpj(id_employees):
     pdf.multi_cell(170,5, txt="LAPORAN PERTANGGUNGJAWABAN PESERTA PROGRAM PEMBERIAN BANTUAN PEMERINTAH DIGITAL TALENT SCHOLARSHIP TAHUN 2021", align="C")
     pdf.ln()
     pdf.set_font("Arial",style='I', size=10)
-    pdf.multi_cell(170,5, txt="Formulir ini untuk diisi  (diketik atau tulis tangan dengan jelas) kemudian diunggah/upload di akun digitalent.kominfo.go.id oleh masing-masing peserta di akhir pelaksanaan pelatihan",border=1, align="J")
+    pdf.multi_cell(170,5, txt="Formulir ini untuk diisi (diketik atau tulis tangan dengan jelas) kemudian diunggah/upload di akun digitalent.kominfo.go.id oleh masing-masing peserta di akhir pelaksanaan pelatihan",border=1, align="J")
     pdf.ln()
     pdf.set_font("Arial",style='B', size=10)
     pdf.cell(170, 5, txt="I. Identitas Diri",ln=1)
@@ -183,9 +183,9 @@ def fpj(id_employees):
     pdf.ln()
     pdf.set_font("Arial",style='B', size=10)
     pdf.cell(170, 5, txt="II. Program Akademi",ln=1)
-    pdf.set_font("Arial", size=10)
 
     for row in rows:
+        pdf.set_font("Arial", size=10)
         pdf.cell(50, 5, txt="Akademi                                   :")
         pdf.cell(100, 5, txt=row["program_akademi"], ln=1)
         pdf.cell(50, 5, txt="Mitra Pelatihan                         :")
@@ -200,6 +200,54 @@ def fpj(id_employees):
     pdf.cell(170, 5, txt="III. Pelaksanaan Kegiatan",ln=1)
     pdf.set_font("Arial", size=10)
     pdf.cell(170, 5, txt="Dengan ini menyatakan telah menerima hak:",ln=1)
+    pdf.set_font("Arial",style='B', size=10)
+    pdf.cell(10, 5, txt="No",border=1, ln=0,align="C")
+    pdf.cell(120, 5, txt="Uraian",border=1, ln=0,align="C")
+    pdf.cell(40, 5, txt="Beri Tanda Check List",border=1,ln=1,align="C")
+    
+    pdf.set_font("Arial", size=10)
+    top = pdf.y
+    pdf.multi_cell(10, 15, txt="1.",border=1,align="C")
+    pdf.y = top
+    pdf.x = pdf.x + 10
+    pdf.multi_cell(120, 5, txt="Self-paced Learning : Peserta pelatihan belajar secara mandiri melalui laptop/komputer, jadwal pelaksanaan Self-paced Learning diatur secara mandiri oleh peserta dalam batas durasi pelatihan Professional Academy",border=1)
+    pdf.y = top
+    pdf.x = pdf.x + 130
+    pdf.set_font("ZapfDingbats", size=10)
+    pdf.multi_cell(40, 15, txt="4",border=1,align="C")
+    
+    pdf.set_font("Arial", size=10)
+    top = pdf.y
+    pdf.multi_cell(10, 20, txt="2.",border=1,align="C")
+    pdf.y = top
+    pdf.x = pdf.x + 10
+    pdf.multi_cell(120, 5, txt="Live Session : Sesi tatap muka secara daring/online antara instruktur dan peserta pelatihan, peserta pelatihan mendapatkan kesempatan bertanya dan berinteraksi dengan instruktur pada tema pelatihan tertentu di Program Professional Academy",border=1)
+    pdf.y = top
+    pdf.x = pdf.x + 130
+    pdf.set_font("ZapfDingbats", size=10)
+    pdf.multi_cell(40, 20, txt="4",border=1,align="C")
+
+    pdf.set_font("Arial", size=10)
+    top = pdf.y
+    pdf.multi_cell(10, 10, txt="3.",border=1,align="C")
+    pdf.y = top
+    pdf.x = pdf.x + 10
+    pdf.multi_cell(120, 5, txt="Hands-on Lab: Peserta akan mengerjakan suatu project secara mandiri pada Virtual Lab",border=1)
+    pdf.y = top
+    pdf.x = pdf.x + 130
+    pdf.set_font("ZapfDingbats", size=10)
+    pdf.multi_cell(40, 10, txt="4",border=1,align="C")
+
+    pdf.set_font("Arial", size=10)
+    top = pdf.y
+    pdf.multi_cell(10, 15, txt="4.",border=1,align="C")
+    pdf.y = top
+    pdf.x = pdf.x + 10
+    pdf.multi_cell(120, 5, txt="Certificate of Completion : diberikan kepada peserta yang menyelesaikan seluruh sesi pelatihan, mengisi survey dan mengunggah/upload Laporan Pertanggungjawaban (form ini) di digitalent.kominfo.go.id",border=1)
+    pdf.y = top
+    pdf.x = pdf.x + 130
+    pdf.set_font("ZapfDingbats", size=10)
+    pdf.multi_cell(40, 15, txt="4",border=1,align="C")
     
     pdf.ln()
     pdf.set_font("Arial",style='B', size=10)
