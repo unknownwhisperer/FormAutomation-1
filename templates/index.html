@@ -44,9 +44,9 @@
     </thead>
       
     <tbody>
-    {% for row in rows %}  
+    {% for row in rows %}
         <tr>
-            <td><a class="btn btn-primary" href="/fk/{{row["id_employees"]}}">FK</a> <a class="btn btn-warning" href="/fpj/{{row["id_employees"]}}">FPJ</a> <a class="btn btn-danger" href="/delete/{{row["id_employees"]}}">Delete</a></td>
+            <td><a class="btn btn-primary" href="/fk/{{row["id_employees"]}}">FK</a> <a class="btn btn-warning" href="/fpj/{{row["id_employees"]}}">FPJ</a> <a class="btn btn-info" href="/edit/{{row["id_employees"]}}">Edit</a> <a class="btn btn-danger" href="/delete/{{row["id_employees"]}}" onclick="return confirm('Are you sure you want to delete?');">Delete</a></td>
             <td style="display:none;">{{row["id_employees"]}}</td>
             <th scope="row">{{row["no_registrasi"]}}</th> 
             <th scope="row">{{row["nama"]}}</th>
